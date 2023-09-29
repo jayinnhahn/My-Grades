@@ -1,52 +1,29 @@
-import React from 'react'
-
-const Items = () => {
-  return (
-    <>
-        <tr className="bg-white border-b">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                Apple MacBook Pro 17"
-            </th>
-            <td className="px-6 py-4">
-                Silver
-            </td>
-            <td className="px-6 py-4">
-                Laptop
-            </td>
-            <td className="px-6 py-4">
-                $2999
-            </td>
-            </tr>
-            <tr className="bg-white border-b">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    Magic Mouse 2
-                </th>
-                <td className="px-6 py-4">
-                    Black
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    $99
-                </td>
-            </tr> 
-    </>
-  )
+interface ItemsProps {
+	tableValues: {
+		courseNo: number;
+		courseName: string;
+		units: number;
+		grade: string;
+	}[];
 }
 
-export default Items
+const Items: React.FC<ItemsProps> = ({ tableValues }) => {
+	return (
+		<>
+			{tableValues.map((item, index) => (
+				<tr key={index} className="bg-white border-b">
+					<td
+						scope="row"
+						className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+					>
+						{item.courseNo}
+					</td>
+					<td className="px-6 py-4">{item.courseName}</td>
+					<td className="px-6 py-4">{item.units}</td>
+					<td className="px-6 py-4">{item.grade}</td>
+				</tr>
+			))}
+		</>
+	);
+};
+export default Items;
