@@ -4,28 +4,40 @@ import Items from './Items';
 interface TableProps {
 	titleCards: string[];
 	tableValues: {
-		courseNo: number;
+		courseNo: string;
 		courseName: string;
 		units: number;
 		grade: string;
 	}[];
+	textValue: string;
 }
-const Table: React.FC<TableProps> = ({ titleCards, tableValues }) => {
+
+const Table: React.FC<TableProps> = ({
+	titleCards,
+	tableValues,
+	textValue,
+}) => {
 	return (
-		<table className="w-full text-sm text-left text-gray-500 border-2 border-solid">
-			<thead className="text-xs text-gray-700 uppercase bg-gray-50">
-				<tr>
-					{titleCards.map((card, index) => (
-						<th key={index} scope="col" className="px-6 py-3">
-							{card}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				<Items tableValues={tableValues} />
-			</tbody>
-		</table>
+		<div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden mt-10">
+			<table className="min-w-full leading-normal border-gray-100 rounded-lg border-2">
+				<thead>
+					<tr>
+						{titleCards.map((title, index) => (
+							<th
+								key={index}
+								className="px-5 py-3 border-b-2 rounded-x-lg border-gray-100 bg-blue-700 text-white text-left text-xs font-semibold uppercase tracking-wider"
+							>
+								{title}
+							</th>
+						))}
+						<th className="py-3 border-b-2 border-gray-200 bg-white text-center"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<Items tableValues={tableValues} query={textValue} />
+				</tbody>
+			</table>
+		</div>
 	);
 };
 

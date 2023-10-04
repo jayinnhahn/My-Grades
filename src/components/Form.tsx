@@ -3,42 +3,61 @@ import React from 'react';
 interface FormProps {
 	titleCards: string[];
 	grades: string[];
+	samplePlaceHolders: string[];
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	form: { [key: string]: string | number };
 }
 
-const Form: React.FC<FormProps> = ({ titleCards, grades }) => {
+const Form: React.FC<FormProps> = ({
+	titleCards,
+	grades,
+	samplePlaceHolders,
+	onSubmit,
+	onChange,
+	form,
+}) => {
 	return (
-		<form>
-			<div className="flex flex-col mb-3">
+		<form onSubmit={onSubmit}>
+			<div className="flex flex-col mb-3 p-4 shadow-md rounded-lg overflow-hidden bg-white">
 				{titleCards.map(
 					(titleCard) =>
 						titleCard !== 'Grade' && (
 							<div key={titleCard}>
-								<label className="block mb-1 text-sm font-medium text-gray-900">
+								<label className="block mb-2 text-sm font-medium text-gray-900">
 									{titleCard}
 								</label>
 								<input
 									type="text"
-									className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-									placeholder="name@flowbite.com"
+									className="border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 mb-3"
+									placeholder={
+										samplePlaceHolders[titleCards.indexOf(titleCard)]
+									}
+									id={titleCard.toLowerCase()}
+									value={form[titleCard.toLowerCase()]}
+									onChange={onChange}
 								/>
 							</div>
 						)
 				)}
 			</div>
-
 			{titleCards.includes('Grade') && (
-				<div>
-					<h4>Grade</h4>
+				<div className="flex flex-col mb-3 p-4 shadow-md rounded-lg overflow-hidden mt-10 bg-white">
+					<label className="block mb-3 text-sm font-medium text-gray-900">
+						Grade
+					</label>
 					<div className="grid grid-cols-2">
 						{grades.map((grade) => (
 							<div key={grade} className="flex items-center mb-4">
 								<input
 									type="radio"
-									name=""
-									value=""
-									className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+									id="grade"
+									name="grade"
+									value={grade}
+									className="w-4 h-4"
+									onChange={onChange}
 								/>
-								<label className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+								<label className="block ml-2 text-sm font-medium text-black">
 									{grade}
 								</label>
 							</div>
@@ -48,8 +67,8 @@ const Form: React.FC<FormProps> = ({ titleCards, grades }) => {
 			)}
 
 			<button
-				type="button"
-				className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+				type="submit"
+				className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm mt-3 px-5 py-2.5 w-full"
 			>
 				Submit
 			</button>
