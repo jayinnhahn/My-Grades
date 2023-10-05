@@ -51,16 +51,26 @@ function App() {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setTableValues([
-			...tableValues,
-			{
-				courseId: tableValues.length + 1,
-				courseNo: form['course no'].toString(),
-				courseName: form['course name'].toString(),
-				units: Number(form.units),
-				grade: form.grade,
-			},
-		]);
+		if (!isNaN(Number(form.units))) {
+			if (Number(form.units) < 6) {
+				setTableValues([
+					...tableValues,
+					{
+						courseId: tableValues.length + 1,
+						courseNo: form['course no'].toString(),
+						courseName: form['course name'].toString(),
+						units: Number(form.units),
+						grade: form.grade,
+					},
+				]);
+			} else {
+				alert(
+					'No Units should exceed 6 (wala pa koy naagihan na subject na ana ang units hehe)'
+				);
+			}
+		} else {
+			alert('You should input a number for the units');
+		}
 	};
 	const gradeEquivalent = {
 		A: 4,
